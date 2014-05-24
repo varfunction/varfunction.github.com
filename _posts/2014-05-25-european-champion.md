@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "European Champion"
+title: "欧冠"
 description: "European Champion"
 category: life
 tags: [football,realmadrid]

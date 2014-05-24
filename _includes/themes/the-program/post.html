@@ -16,9 +16,12 @@
 						<p class="date-publish">
 							发表时间: 
 							<date class="date-pub" title="{{ page.date | date_to_xmlschema }}" datetime="{{ page.date | date_to_xmlschema }}" pubdate>
-							<span class="month"><abbr>{{ page.date | date: '%B' }}</abbr></span>
+							<span class="year">{{ page.date | date: '%Y-%m-%d' }}</span>
+							<!--
+							<span class="year">{{ page.date | date: '%Y' }}.</span>
+							<span class="month">{{ page.date | date: '%m' }}.</span>
 							<span class="day">{{ page.date | date: '%d' }}</span>
-							<span class="year">{{ page.date | date: '%Y' }}</span>
+							-->
 							</date>
 						</p>
 						<ul class="list-category list-linear">
