@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 请叫我红领巾!
+title: 请叫我红领巾
 tagline: Supporting tagline
 ---
 {% include JB/setup %}
