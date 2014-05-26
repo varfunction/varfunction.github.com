@@ -665,7 +665,7 @@ pre {
   border-bottom: 1px dashed #d08688;
 }
 .unit-article blockquote {
-  border-left: 1em solid rgba(21, 25, 25, 0.4);
+  border-left: 0.8em solid rgba(21, 25, 25, 0.4);
   padding-left: 1em;
 }
 .unit-article blockquote p {
