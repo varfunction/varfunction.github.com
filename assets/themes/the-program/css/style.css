@@ -321,6 +321,54 @@ table {
 td {
   vertical-align: top;
 }
+
+/*
+mod table style start
+*/
+table {
+    margin-bottom: 20px;
+    max-width: 100%;
+    border-collapse: collapse;
+    transition: all 0.3s;
+    border: 1px solid rgba(50,118,177,0.167)
+}
+
+table:hover {
+    transition: all 0.3s;
+    border: 1px solid rgba(50,118,177,0.35);
+    box-shadow: 0px 0px 3px rgba(50,118,177,0.267)
+}
+
+table thead tr th {
+    border: 1px solid rgba(50,118,177,0.167);
+    border-top: 0px none;
+    border-bottom-width: 2px;
+    vertical-align: bottom;
+    padding: 8px
+}
+
+table tbody tr td {
+    border: 1px solid rgba(50,118,177,0.167);
+    vertical-align: middle;
+    padding: 8px
+}
+
+table thead>tr {
+    background-color: rgba(249,249,249,0.9)
+}
+
+table tbody>tr:nth-child(2n+1) {
+    background-color: rgba(249,249,249,0.5)
+}
+
+table tbody tr:hover {
+    background-color: rgba(235,235,235,0.7);
+    transition: all 0.3s
+}
+/*
+mod table style end
+*/
+
 /*
 Base .mod module from http://j.mp/svs81k
 
