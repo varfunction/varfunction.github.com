@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 唐洋的博客
+title: oceantang
 tagline: Supporting tagline
 ---
 {% include JB/setup %}
