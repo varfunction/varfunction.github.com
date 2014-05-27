@@ -85,8 +85,6 @@ JB :
   #
   comments :
     provider : custom
-    duoshuo : 
-      short_name : oceantang
    
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
