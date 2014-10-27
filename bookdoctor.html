@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+<head>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script type="text/javascript">
+
+Date.prototype.format =function(format)
+{
+var o = {
+"M+" : this.getMonth()+1, //month
+"d+" : this.getDate(), //day
+"h+" : this.getHours(), //hour
+"m+" : this.getMinutes(), //minute
+"s+" : this.getSeconds(), //second
+"q+" : Math.floor((this.getMonth()+3)/3), //quarter
+"S" : this.getMilliseconds() //millisecond
+}
+if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+(this.getFullYear()+"").substr(4- RegExp.$1.length));
+for(var k in o)if(new RegExp("("+ k +")").test(format))
+format = format.replace(RegExp.$1,
+RegExp.$1.length==1? o[k] :
+("00"+ o[k]).substr((""+ o[k]).length));
+return format;
+}
+
+//DateFilter = 2014-12-12 这种格式
+
+var docID = 4336
+var INTERVAL  = 5000
+
+var docPage = "http://sz.91160.com/doctors/index/docid-"+ docID +".html"
+var timer = null
+var docData  = {docid: docID, date: "2014-10-28", days: 6}
+
+
+function refreshData()
+{
+	docPage = "http://sz.91160.com/doctors/index/docid-"+ docID +".html"
+	var date = new Date()	
+	docData  = {docid: docID, date: (date.format("yyyy-MM-dd")), days: 6}
+}
+
+var checkEmptyClass = function(data,dateFilter){
+
+	var schs = data["sch"]
+
+	var STR = JSON.stringify
+
+	
+	for (var i = data['sch'].length - 1; i >= 0; i--) {
+		var sch =  data['sch'][i]
+		
+		for (var key in sch){
+			var value = sch[key]
+
+			var str = JSON.stringify(value)
+
+			for (var date in value){
+				var content = value[date]								
+
+				var bookMax = parseInt(content['yuyue_max'])
+				var bookNum = parseInt(content['yuyue_num'])
+
+				if (bookMax > bookNum) {
+					console.log("stop Timer");					
+					clearInterval(timer)
+					console.log("跳到医生主页："  +  docPage);					
+					location.href = docPage;
+
+					return
+				}
+			}
+		}
+	}
+	updateStatus(2)
+}
+
+function sendPost()
+{
+	updateStatus(1)
+	refreshData()
+
+	console.log("doc Data = " + docData);
+
+	$.post("http://sz.91160.com/doctors/ajaxgetclass.html", docData,
+		function(data,status){
+	    	var objJSON = eval('(' + data + ')')
+	    	console.log("data = "+data)
+			checkEmptyClass(objJSON)
+	});		
+}
+
+function startTimer(){	
+	updateStatus(0)
+	timer = setInterval(sendPost, INTERVAL)
+}
+
+
+function updateStatus(st){
+	$("#status").text(function(i,origText){
+      if (st == 2){
+      	return "预约已经满了，等待下一次刷新。"
+      }else if(st == 1){
+		return "刷新数据中..."
+      }else if(st == 0){
+		return "即将刷新。"
+      }else {
+      	return ""
+      }
+    });
+}
+
+</script>
+
+</head>
+
+<body>
+
+
+<p>医生ID: <input type="text" id="did"  value="4336"/></p>
+<p>刷新频率: <input type="text" id="interval" value=5000 /></p>
+<input type="submit" value="确定" id='ok'/>
+<input type="submit" value="停止" id='cancel'/>
+<br>
+<p状态: <label id='status'> </label></p>
+<p id="status"></p>
+
+<script type="text/javascript">
+
+
+$("#ok").click(function(event) {
+	docID = $("#did").val()
+	INTERVAL = $("#interval").val()
+	refreshData()
+	sendPost()
+	startTimer()	
+	$("#ok").hide();	
+	$("#cancel").show();	
+});
+
+$("#cancel").click(function(event) {
+	clearInterval(timer)
+	$("#cancel").hide();	
+	$("#ok").show();		
+	updateStatus(3)
+});
+
+
+</script>
+
+</body>
+</html>
